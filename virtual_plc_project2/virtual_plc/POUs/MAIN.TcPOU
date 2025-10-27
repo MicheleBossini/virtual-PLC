@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{de3beb21-c81c-41bb-870c-964d49ad45d1}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR RETAIN
+	start : BOOL := FALSE;
+END_VAR
+VAR
+	Tfill: TON;
+	FILLING : BOOL := FALSE;
+	WaterLevel : BOOL := FALSE;
+	Theat: TON;
+    WaterTemp :REAL;
+	HEATING : BOOL := FALSE;
+	Tbrew: TON;
+    WaterReady : BOOL := FALSE;
+	BREWING : BOOL := FALSE;
+    Tend: TON;
+	CoffeeReady : BOOL := FALSE;
+	
+	
+	
+	INTENSITY : INT;
+	TIMER : TON;
+	
+	
+	state : INT := 1;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE state OF
+
+    1: 
+        CoffeeReady := FALSE;
+        FILLING := FALSE;
+        HEATING := FALSE;
+        BREWING := FALSE;
+        WaterLevel := FALSE;
+        WaterReady := FALSE;
+
+        
+       IF start THEN
+            state := 2;
+        END_IF;
+
+    2:  Tfill(IN := TRUE, PT := T#3S);
+        FILLING := NOT WaterLevel; 
+        WaterLevel := NOT FILLING;
+        IF Tfill.Q THEN          
+            Tfill(IN := FALSE);  
+            FILLING := FALSE;        
+            State := 3;              
+        END_IF
+		
+
+
+    3:  WaterLevel := TRUE;
+        HEATING := TRUE;
+        IF WaterTemp >= 90 THEN
+			HEATING := FALSE;
+			state := 4;
+			
+		END_IF
+     4:   WaterReady := TRUE;
+        Theat(IN := TRUE, PT := T#3S);
+        IF Theat.Q THEN
+            WaterReady := FALSE;
+            Theat(IN := FALSE);
+            state := 5;
+        END_IF;
+
+    5:  WaterLevel := FALSE;
+         CASE INTENSITY OF
+            1: Tbrew(IN := TRUE, PT := T#3S);
+            2: Tbrew(IN := TRUE, PT := T#6S);
+            3: Tbrew(IN := TRUE, PT := T#9S);
+        ELSE
+            Tbrew(IN := TRUE, PT := T#3S);  
+        END_CASE
+
+        BREWING := TRUE;  
+
+        
+        IF Tbrew.Q THEN
+            BREWING := FALSE;     
+            Tbrew(IN := FALSE); 
+            State := 6;  
+            CoffeeReady := TRUE; 
+        END_IF
+
+    6:  
+        Tend(IN := TRUE, PT := T#3S);
+        IF Tend.Q THEN
+            Tend(IN := FALSE);
+            state := 1;
+            start := FALSE;
+        END_IF;
+
+END_CASE;]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="111" Count="14" />
+      <LineId Id="192" Count="1" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="194" Count="3" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="134" Count="4" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="230" Count="2" />
+      <LineId Id="144" Count="2" />
+      <LineId Id="207" Count="15" />
+      <LineId Id="156" Count="9" />
+      <LineId Id="26" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
