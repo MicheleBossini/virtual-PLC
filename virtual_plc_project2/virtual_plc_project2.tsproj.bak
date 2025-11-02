@@ -10,17 +10,9 @@
 		</System>
 		<Plc>
 			<Project GUID="{75DA8F02-212E-401F-954C-C6C6FFD911F8}" Name="virtual_plc" PrjFilePath="virtual_plc\virtual_plc.plcproj" TmcFilePath="virtual_plc\virtual_plc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="virtual_plc\virtual_plc.tmc" TmcHash="{6E979D74-824A-2A84-D772-B364C3D2D922}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="virtual_plc\virtual_plc.tmc" TmcHash="{582E09E2-FC07-D500-0F44-100A83F408E0}">
 					<Name>virtual_plc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<Vars VarGrpType="8" AreaNo="4">
-						<Name>PlcTask Retains</Name>
-						<Var>
-							<Name>MAIN.start</Name>
-							<Type>BOOL</Type>
-							<InOut>7</InOut>
-						</Var>
-					</Vars>
 					<Contexts>
 						<Context>
 							<Id>0</Id>

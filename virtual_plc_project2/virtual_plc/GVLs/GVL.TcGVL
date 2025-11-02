@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
-  <GVL Name="GVL" Id="{941d89e0-9a77-4027-9817-6dc250f86a91}">
+  <GVL Name="GVL" Id="{7c99cd67-5fc7-4eb9-9e45-cac69ab510bd}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
+	CoffeeReady: BOOL := FALSE;
 	
+	GVL_CoffeeMachine: INT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
