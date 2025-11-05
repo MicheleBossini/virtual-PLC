@@ -32,6 +32,9 @@
     <Compile Include="POUs\MaintenanceTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />

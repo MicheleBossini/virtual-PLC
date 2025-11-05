@@ -10,7 +10,7 @@ VAR
 	
 	ResetCounter: BOOL;
 	CoffeeReadyOld: BOOL := FALSE;
-	CLEANING: BOOL := FALSE;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -23,9 +23,9 @@ CoffeeReadyOld := GVL.CoffeeReady;
 IF CycleCounter >= 5 THEN
     MaintenanceNeeded := TRUE;
     Message := 'Maintenance required!';
-	CLEANING := TRUE;
+	GVL.CLEANING := TRUE;
 
-    Tclean(IN := TRUE, PT := T#3S);
+    Tclean(IN := TRUE, PT := T#4S);
 
     IF Tclean.Q THEN
         Tclean(IN := FALSE);
@@ -35,7 +35,7 @@ IF CycleCounter >= 5 THEN
 ELSE
     MaintenanceNeeded := FALSE;
     Message := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter));
-	CLEANING := FALSE;
+	GVL.CLEANING := FALSE;
 END_IF;
 
 IF ResetCounter = TRUE THEN  

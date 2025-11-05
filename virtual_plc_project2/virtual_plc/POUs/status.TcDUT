@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="status" Id="{1a3340a8-f4e3-4153-85dc-b8d423a4a911}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE status :
+(START,
+LEVELCHECK,
+FILL,
+HEAT,
+HEATING,
+BREW,
+WATERREADY,
+INTENS,
+SUGAR,
+READY,
+CLEAN,
+END
+) := START;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

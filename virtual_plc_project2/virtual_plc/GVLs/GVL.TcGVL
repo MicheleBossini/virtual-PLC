@@ -4,8 +4,8 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 	CoffeeReady: BOOL := FALSE;
-	
-	GVL_CoffeeMachine: INT;
+
+	CLEANING: BOOL := FALSE;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
