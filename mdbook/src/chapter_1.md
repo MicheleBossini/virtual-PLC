@@ -4,6 +4,5 @@ authors = ["Michele"]
 
 language = "en"
 
-src = "src"
 
 title = "mybook"

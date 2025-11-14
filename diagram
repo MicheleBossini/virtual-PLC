@@ -1,7 +1,7 @@
 @startuml
 title ☕ Coffee Maker - Linear Process Flow
 skinparam backgroundColor transparent
-skinparam participantPadding 20
+
 
 
 == Start Process ==
