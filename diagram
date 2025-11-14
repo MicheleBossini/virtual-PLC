@@ -3,13 +3,6 @@ title ☕ Coffee Maker - Linear Process Flow
 skinparam backgroundColor transparent
 skinparam participantPadding 20
 
-participant "User" as User
-participant "GVL\n(Global Vars)" as GVL
-participant "Water Level" as Water
-participant "Heater" as Heater
-participant "Brewer" as Brewer
-participant "Timer" as Timer
-participant "Finish" as Finish
 
 == Start Process ==
 
