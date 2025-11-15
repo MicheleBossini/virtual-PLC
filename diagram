@@ -1,30 +1,31 @@
 @startuml
-title ☕ Coffee Maker - Linear Process Flow
+title Coffee Maker - Linear Process Flow
 skinparam backgroundColor transparent
 
 
 
 == Start Process ==
 
-User -> GVL : Start := TRUE
+User -> VAR : Start := TRUE
 
-GVL -> Water : Check Water_Level
-Water -> GVL : Water_Level
+VAR -> Water : Check Water_Level
+Water -> VAR : Water_Level
 
 alt Water_Level < 100%
-Water -> Water : Start Filling
-Water -> GVL : FILLING := TRUE
-Water -> GVL : Water_Level := 100%
-Water -> GVL : FILLING := FALSE
+VAR -> Water : Start Filling
+Water -> VAR : FILLING := TRUE
+Water -> Water : timer 5s
+Water -> VAR : Water_Level := 100%
+Water -> VAR : FILLING := FALSE
 end
 
-Water -> Heater : Start Heating
-Heater -> GVL : HEATING := TRUE
-Heater -> Timer : Start 5s
+VAR -> Heater : Start Heating
+Heater -> VAR : HEATING := TRUE
+Heater -> Heater : timer 5s
 Timer --> Heater : Timer.Q = TRUE
-Heater -> GVL : HEATING := FALSE
-Heater -> GVL : Water_Temp := 90.0
-Heater -> GVL : Water_Ready := TRUE
+Heater -> VAR : HEATING := FALSE
+Heater -> VAR : Water_Temp := 90.0
+Heater -> VAR : Water_Ready := TRUE
 
 == Brewing Process ==
 
