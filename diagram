@@ -11,10 +11,11 @@ User -> VAR : Start := TRUE
 VAR -> Water : Check Water_Level
 Water -> VAR : Water_Level
 
-alt Water_Level < 100%
+alt Water_Level < 80%
 VAR -> Water : Start Filling
 Water -> VAR : FILLING := TRUE
-Water -> Water : timer 5s
+Water -> Timer : timer 5s
+Timer -> Water : timer.Q := TRUE
 Water -> VAR : Water_Level := 100%
 Water -> VAR : FILLING := FALSE
 end
@@ -29,20 +30,19 @@ Heater -> VAR : Water_Ready := TRUE
 
 == Brewing Process ==
 
-GVL -> Brewer : Check Water_Ready
+VAR -> Brewer : Check Water_Ready
 alt Water_Ready = TRUE
-Brewer -> Brewer : Start Brewing
-Brewer -> GVL : BREWING := TRUE
-Brewer -> Timer : Start 7s
+Brewer -> VAR : BREWING := TRUE
+Brewer -> Timer : Start 3s/6s/9s
 Timer --> Brewer : Timer.Q = TRUE
-Brewer -> GVL : BREWING := FALSE
-Brewer -> GVL : Coffee_Ready := TRUE
+Brewer -> VAR : BREWING := FALSE
+Brewer -> VAR : Coffee_Ready := TRUE
 end
 
 == End Process ==
 
 alt coffe_ready := TRUE
-GVL -> Finish : Finish :=TRUE
+CoffeeReady -> GVL : Finish :=TRUE
 end
 
 @enduml
