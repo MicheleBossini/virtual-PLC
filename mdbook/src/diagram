@@ -22,7 +22,7 @@ end
 
 VAR -> Heater : Start Heating
 Heater -> VAR : HEATING := TRUE
-Heater -> Heater : timer 5s
+Heater -> Timer : timer 5s
 Timer --> Heater : Timer.Q = TRUE
 Heater -> VAR : HEATING := FALSE
 Heater -> VAR : Water_Temp := 90.0
