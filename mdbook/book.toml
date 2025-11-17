@@ -3,3 +3,5 @@ authors = ["Michele"]
 language = "en"
 src = "src"
 title = "virtual PLC"
+[preprocessor.plantuml]
+plantuml_jar_path = "c:\\Users\\miche\\plantuml.jar"

@@ -1,6 +1,3 @@
-PULM DIAGRAM
-
-```plantuml
 @startuml
 title Coffee Maker - Linear Process Flow
 
