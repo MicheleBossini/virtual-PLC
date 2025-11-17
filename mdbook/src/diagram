@@ -1,8 +1,5 @@
 @startuml
 title Coffee Maker - Linear Process Flow
-skinparam backgroundColor transparent
-
-
 
 == Start Process ==
 

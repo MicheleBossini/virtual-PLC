@@ -1,3 +1,48 @@
 PULM DIAGRAM
 
-http://localhost:4000/png/VLF1Re904BtlLyobnofDqwQIOg86r8GsBQ8UpGR6kX6XOJSr_VlkihWi47eYE-_DctapWs0YGrWKnoCYlD4pbd0F8SkHbl1H5Wbo3a5MN0dnFDW8MWeJzZn2jbmbJ64tYy2jSTU3EDhwXAYWnFPKI98BYnCcP_qwXFY36T68IRSXGZDX1-0LNfoxhgGk6B0iO_bNLovOX-7wVMdwCN3CBbMsgBvFdEY0fLiXeyz-QgzHHNbmP6V3nODPkF49vgcPo0fR_QkdwhyE6usLFujj0mq-vC3MZciFlUIUk6wmIz0cOxnyAyx46Ja3b0Xf-jjiNTx9lCIhDDIwbDgwWdhNK2bO6zUAjM2TOOhE8tzlJwN1RrFHKttausS-djYpCSKxi_cdX9vDbw3_buxpQiFIlP-dBUVALw8I3cMBhqMqXbHUxa9rDond_2GvDya_
+```plantuml
+@startuml
+title Coffee Maker - Linear Process Flow
+
+== Start Process ==
+
+User -> VAR : Start := TRUE
+
+VAR -> Water : Check Water_Level
+Water -> VAR : Water_Level
+
+alt Water_Level < 80%
+VAR -> Water : Start Filling
+Water -> VAR : FILLING := TRUE
+Water -> Timer : timer 5s
+Timer -> Water : timer.Q := TRUE
+Water -> VAR : Water_Level := 100%
+Water -> VAR : FILLING := FALSE
+end
+
+VAR -> Heater : Start Heating
+Heater -> VAR : HEATING := TRUE
+Heater -> Timer : timer 5s
+Timer --> Heater : Timer.Q = TRUE
+Heater -> VAR : HEATING := FALSE
+Heater -> VAR : Water_Temp := 90.0
+Heater -> VAR : Water_Ready := TRUE
+
+== Brewing Process ==
+
+VAR -> Brewer : Check Water_Ready
+alt Water_Ready = TRUE
+Brewer -> VAR : BREWING := TRUE
+Brewer -> Timer : Start 3s/6s/9s
+Timer --> Brewer : Timer.Q = TRUE
+Brewer -> VAR : BREWING := FALSE
+Brewer -> VAR : Coffee_Ready := TRUE
+end
+
+== End Process ==
+
+alt coffe_ready := TRUE
+CoffeeReady -> GVL : Finish :=TRUE
+end
+
+@enduml
