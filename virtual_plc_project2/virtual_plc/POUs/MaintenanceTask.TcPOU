@@ -14,7 +14,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// every cooffee made the counter increase 
+      <ST><![CDATA[// every cooffee made the counter increase
 IF (GVL.CoffeeReady = TRUE) AND (CoffeeReadyOld = FALSE) THEN
     CycleCounter := CycleCounter + 1;
 END_IF;
