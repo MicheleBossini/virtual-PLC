@@ -22,7 +22,7 @@ VAR
 	
 	INTENSITY_BUTTON : INT;
 	TIMER : TON;
-	SugarLevel : INT :=1;
+	SUGAR_BUTTON : INT :=1;
 	SugarMessage : STRING(30);
 	
 	state : status := status.START;
@@ -117,7 +117,7 @@ END_VAR]]></Declaration>
 	// the user can choose the sugar quantity
     status.SUGAR: 
 		IF CoffeeBrewed := TRUE THEN
-		CASE SugarLevel OF
+		CASE SUGAR_BUTTON OF
 			1: SugarMessage := 'no sugar';
 			2: SugarMessage := 'medium sugar';
 			3: SugarMessage := 'full sugar';
