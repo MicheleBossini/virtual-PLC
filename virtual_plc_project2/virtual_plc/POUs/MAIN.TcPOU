@@ -20,7 +20,7 @@ VAR
 	CoffeeBrewed : BOOL := FALSE;
 	Tready: TON;
 	
-	INTENSITY : INT;
+	INTENSITY_BUTTON : INT;
 	TIMER : TON;
 	SugarLevel : INT :=1;
 	SugarMessage : STRING(30);
@@ -91,12 +91,12 @@ END_VAR]]></Declaration>
             WaterReady := FALSE;
             Theat(IN := FALSE);
 			WaterTemp := 30;
-            state := status.INTENS;
+            state := status.INTENSITY;
         END_IF
 	// need to choose the intensity of the coffee, level 1 if the user wants light coffe and 3 if strong coffee
-    status.INTENS:  
+    status.INTENSITY:  
 		 WaterLevel := FALSE;
-         CASE INTENSITY OF
+         CASE INTENSITY_BUTTON OF
             1: Tbrew(IN := TRUE, PT := T#3S);
             2: Tbrew(IN := TRUE, PT := T#6S);
             3: Tbrew(IN := TRUE, PT := T#9S);
