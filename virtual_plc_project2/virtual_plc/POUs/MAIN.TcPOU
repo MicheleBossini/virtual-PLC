@@ -141,23 +141,29 @@ END_VAR]]></Declaration>
 	
 	status.END:  
         Tend(IN := TRUE, PT := T#5S);
-        IF Tend.Q THEN
-            Tend(IN := FALSE);
-            state := status.CLEAN;
-            start := FALSE;
-			GVL.CoffeeReady := FALSE;
+        IF Tend.Q THEN           
+            IF GVL.CLEANING THEN
+				state:=status.CLEAN;
+				Tend(IN := FALSE);
+				start := FALSE;
+				GVL.CoffeeReady := FALSE;
+				
+			ELSE 
+            	Tend(IN := FALSE);
+				start := FALSE;
+				GVL.CoffeeReady := FALSE;
+				state := status.START;
+			END_IF
         END_IF;
 		
 	//waiting time to allow the machine cleaning program, if we reached 5 cycles
 	status.CLEAN:
-	 IF GVL.CLEANING THEN
-		 Tclean(IN:=TRUE, PT := T#5S);
+		 Tclean(IN:=TRUE, PT := T#8S);
 		 IF Tclean.Q THEN
 			 Tclean(IN:=FALSE);
 			 state:=status.START;
-		 END_IF
-	ELSE state:=status.START;	 
-	 END_IF
+			 
+		 END_IF	 
 	 
 	 
 
@@ -229,12 +235,27 @@ END_CASE;]]></ST>
       <LineId Id="164" Count="0" />
       <LineId Id="416" Count="0" />
       <LineId Id="370" Count="0" />
-      <LineId Id="275" Count="6" />
+      <LineId Id="275" Count="1" />
+      <LineId Id="487" Count="0" />
+      <LineId Id="489" Count="0" />
+      <LineId Id="492" Count="0" />
+      <LineId Id="494" Count="0" />
+      <LineId Id="496" Count="1" />
+      <LineId Id="500" Count="0" />
+      <LineId Id="493" Count="0" />
+      <LineId Id="490" Count="0" />
+      <LineId Id="498" Count="0" />
+      <LineId Id="281" Count="0" />
+      <LineId Id="491" Count="0" />
+      <LineId Id="499" Count="0" />
       <LineId Id="274" Count="0" />
       <LineId Id="417" Count="0" />
       <LineId Id="378" Count="0" />
-      <LineId Id="445" Count="7" />
-      <LineId Id="376" Count="1" />
+      <LineId Id="445" Count="0" />
+      <LineId Id="447" Count="3" />
+      <LineId Id="501" Count="0" />
+      <LineId Id="451" Count="0" />
+      <LineId Id="377" Count="0" />
       <LineId Id="371" Count="0" />
       <LineId Id="165" Count="0" />
       <LineId Id="26" Count="0" />

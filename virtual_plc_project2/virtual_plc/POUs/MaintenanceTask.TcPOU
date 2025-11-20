@@ -27,11 +27,12 @@ IF CycleCounter >= 5 THEN
     Message := 'Maintenance required!';
 	GVL.CLEANING := TRUE;
 
-    Tclean(IN := TRUE, PT := T#4S);
+    Tclean(IN := TRUE, PT := T#8S);
 
     IF Tclean.Q THEN
         Tclean(IN := FALSE);
         ResetCounter := TRUE;
+		GVL.CLEANING := FALSE;
     END_IF;
 
 ELSE 
@@ -57,7 +58,9 @@ END_IF;
       <LineId Id="100" Count="3" />
       <LineId Id="126" Count="0" />
       <LineId Id="105" Count="1" />
-      <LineId Id="108" Count="8" />
+      <LineId Id="108" Count="3" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="112" Count="4" />
       <LineId Id="128" Count="0" />
       <LineId Id="117" Count="0" />
       <LineId Id="142" Count="0" />
