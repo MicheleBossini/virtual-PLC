@@ -14,12 +14,14 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF (GVL.CoffeeReady = TRUE) AND (CoffeeReadyOld = FALSE) THEN
+      <ST><![CDATA[// every cooffee made the counter increase
+IF (GVL.CoffeeReady = TRUE) AND (CoffeeReadyOld = FALSE) THEN
     CycleCounter := CycleCounter + 1;
 END_IF;
 
 CoffeeReadyOld := GVL.CoffeeReady;
 
+// if the machine has done 5 coffee, the cleaning part is needed
 IF CycleCounter >= 5 THEN
     MaintenanceNeeded := TRUE;
     Message := 'Maintenance required!';
@@ -38,6 +40,7 @@ ELSE
 	GVL.CLEANING := FALSE;
 END_IF;
 
+//after cleaning, counter must be resetted
 IF ResetCounter = TRUE THEN  
     CycleCounter := 0;
     MaintenanceNeeded := FALSE;
@@ -47,14 +50,18 @@ END_IF;
 ]]></ST>
     </Implementation>
     <LineIds Name="MaintenanceTask">
+      <LineId Id="140" Count="0" />
       <LineId Id="93" Count="2" />
       <LineId Id="97" Count="1" />
-      <LineId Id="100" Count="3" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="101" Count="2" />
       <LineId Id="126" Count="0" />
       <LineId Id="105" Count="1" />
       <LineId Id="108" Count="8" />
       <LineId Id="128" Count="0" />
       <LineId Id="117" Count="0" />
+      <LineId Id="142" Count="0" />
       <LineId Id="119" Count="6" />
       <LineId Id="5" Count="0" />
     </LineIds>
