@@ -1,4 +1,22 @@
-PULM DIAGRAM
+PULM DIAGRAM for the first task
+
+For the firt task, MAIN task, the machine need to automatize an entire production of coffe.
+There is a start bottom, which the user has to set manually on, and then the machine starts with the production.
+The main function are: 
+
+FILLING (only if the water is not enough);
+
+HEATING (to reach the correct temperature);
+
+CHOISE the intensity of the coffee;
+
+BREWING (pouring hot water over the coffee grounds);
+
+choise the quantity of sugar;
+
+and cleaning part if we have already made 5 coffee;
+
+
 
 ```plantuml
 @startuml
@@ -46,3 +64,4 @@ CoffeeReady -> GVL : Finish :=TRUE
 end
 
 @enduml
+```
