@@ -33,7 +33,7 @@ IF CycleCounter >= 5 THEN
         Tclean(IN := FALSE);
         ResetCounter := TRUE;
     END_IF;
-
+//maintenance finished and numbur of coffe made
 ELSE
     MaintenanceNeeded := FALSE;
     Message := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter));
@@ -53,7 +53,7 @@ END_IF;
       <LineId Id="140" Count="0" />
       <LineId Id="93" Count="2" />
       <LineId Id="97" Count="1" />
-      <LineId Id="100" Count="0" />
+      <LineId Id="154" Count="0" />
       <LineId Id="141" Count="0" />
       <LineId Id="101" Count="2" />
       <LineId Id="126" Count="0" />
