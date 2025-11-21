@@ -20,9 +20,9 @@ VAR
 	CoffeeBrewed : BOOL := FALSE;
 	Tready: TON;
 	
-	INTENSITY : INT;
+	INTENSITY_BUTTON : INT;
 	TIMER : TON;
-	SugarLevel : INT :=1;
+	SUGAR_BUTTON : INT :=1;
 	SugarMessage : STRING(30);
 	
 	state : status := status.START;
@@ -32,8 +32,8 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE state OF
 
-    status.START: 
-        GVL.CoffeeReady := FALSE;
+    status.START:  //initialization and start the machine
+        GVL.CoffeeReady := FALSE; 
         FILLING := FALSE;
         HEATING := FALSE;
         BREWING := FALSE;
@@ -41,10 +41,11 @@ END_VAR]]></Declaration>
         WaterReady := FALSE;
 		SugarMessage := '';
 		IF start THEN
-            state := status.LEVELCHECK;
+            state := status.LEVELCHECK; //check if the water is enough
         END_IF;       
-		
-	status.LEVELCHECK:
+	
+    // over 80% is sufficient, otherwise the water has to be filled	
+	status.LEVELCHECK: // over 80% is sufficient, otherwise the water has to be filled
 	IF Level >= 80 THEN
 		state := status.HEAT;
 		WaterLevel := TRUE;
@@ -52,8 +53,8 @@ END_VAR]]></Declaration>
  		state:=status.FILL;
 	END_IF
 	
-
-    status.FILL:
+    //this status only if the water is under 80%
+    status.FILL:  
 		  Tfill(IN := TRUE, PT := T#8S);
 		FILLING:= TRUE;
         FILLING := NOT WaterLevel; 
@@ -68,7 +69,8 @@ END_VAR]]></Declaration>
 			state := status.START;
 		END_IF
 		
-	 status.HEAT:
+	//when the water is checked, the heating process starts
+	status.HEAT:
         Theat (IN:=TRUE, PT := T#5S);
 		HEATING := TRUE;
 		HEATING := NOT WaterReady;
@@ -81,6 +83,7 @@ END_VAR]]></Declaration>
 			state := status.WATERREADY;
 		END_IF
 		
+	// when the right temperature of the water is reached, water is ready 
      status.WATERREADY:
 	    WaterReady := TRUE;
         Theat(IN := TRUE, PT := T#5S);
@@ -88,19 +91,19 @@ END_VAR]]></Declaration>
             WaterReady := FALSE;
             Theat(IN := FALSE);
 			WaterTemp := 30;
-            state := status.INTENS;
+            state := status.INTENSITY;
         END_IF
-
-    status.INTENS:  
+	// need to choose the intensity of the coffee, level 1 if the user wants light coffe and 3 if strong coffee
+    status.INTENSITY:  
 		 WaterLevel := FALSE;
-         CASE INTENSITY OF
+         CASE INTENSITY_BUTTON OF
             1: Tbrew(IN := TRUE, PT := T#3S);
             2: Tbrew(IN := TRUE, PT := T#6S);
             3: Tbrew(IN := TRUE, PT := T#9S);
         ELSE
             Tbrew(IN := TRUE, PT := T#6S);  
         END_CASE
-
+	
         BREWING := TRUE;  
 
         Tbrew (IN:=TRUE, PT:= T#5S);
@@ -110,9 +113,11 @@ END_VAR]]></Declaration>
             State := status.SUGAR;  
             CoffeeBrewed := TRUE; 
         END_IF
+		
+	// the user can choose the sugar quantity
     status.SUGAR: 
 		IF CoffeeBrewed := TRUE THEN
-		CASE SugarLevel OF
+		CASE SUGAR_BUTTON OF
 			1: SugarMessage := 'no sugar';
 			2: SugarMessage := 'medium sugar';
 			3: SugarMessage := 'full sugar';
@@ -122,6 +127,7 @@ END_VAR]]></Declaration>
 		state := status.READY;
 	END_IF
 	
+	//The coffee is ready
     status.READY:  
         Tready(IN := TRUE, PT := T#5S);
         IF Tready.Q THEN
@@ -131,25 +137,33 @@ END_VAR]]></Declaration>
 			GVL.CoffeeReady := TRUE;
 			CoffeeBrewed := FALSE;
         END_IF
+		
 	
 	status.END:  
         Tend(IN := TRUE, PT := T#5S);
-        IF Tend.Q THEN
-            Tend(IN := FALSE);
-            state := status.CLEAN;
-            start := FALSE;
-			GVL.CoffeeReady := FALSE;
+        IF Tend.Q THEN           
+            IF GVL.CLEANING THEN
+				state:=status.CLEAN;
+				Tend(IN := FALSE);
+				start := FALSE;
+				GVL.CoffeeReady := FALSE;
+				
+			ELSE 
+            	Tend(IN := FALSE);
+				start := FALSE;
+				GVL.CoffeeReady := FALSE;
+				state := status.START;
+			END_IF
         END_IF;
 		
+	//waiting time to allow the machine cleaning program, if we reached 5 cycles
 	status.CLEAN:
-	 IF GVL.CLEANING THEN
-		 Tclean(IN:=TRUE, PT := T#5S);
+		 Tclean(IN:=TRUE, PT := T#8S);
 		 IF Tclean.Q THEN
 			 Tclean(IN:=FALSE);
 			 state:=status.START;
-		 END_IF
-	ELSE state:=status.START;	 
-	 END_IF
+			 
+		 END_IF	 
 	 
 	 
 
@@ -161,6 +175,7 @@ END_CASE;]]></ST>
       <LineId Id="357" Count="1" />
       <LineId Id="360" Count="0" />
       <LineId Id="320" Count="0" />
+      <LineId Id="410" Count="0" />
       <LineId Id="318" Count="0" />
       <LineId Id="321" Count="1" />
       <LineId Id="353" Count="0" />
@@ -180,6 +195,7 @@ END_CASE;]]></ST>
       <LineId Id="188" Count="0" />
       <LineId Id="313" Count="2" />
       <LineId Id="190" Count="0" />
+      <LineId Id="411" Count="0" />
       <LineId Id="136" Count="0" />
       <LineId Id="333" Count="0" />
       <LineId Id="351" Count="0" />
@@ -189,6 +205,7 @@ END_CASE;]]></ST>
       <LineId Id="345" Count="0" />
       <LineId Id="342" Count="0" />
       <LineId Id="346" Count="0" />
+      <LineId Id="412" Count="0" />
       <LineId Id="227" Count="0" />
       <LineId Id="327" Count="0" />
       <LineId Id="234" Count="0" />
@@ -199,7 +216,10 @@ END_CASE;]]></ST>
       <LineId Id="144" Count="2" />
       <LineId Id="328" Count="0" />
       <LineId Id="207" Count="15" />
-      <LineId Id="156" Count="1" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="414" Count="0" />
+      <LineId Id="413" Count="0" />
+      <LineId Id="157" Count="0" />
       <LineId Id="329" Count="0" />
       <LineId Id="264" Count="0" />
       <LineId Id="266" Count="0" />
@@ -208,19 +228,34 @@ END_CASE;]]></ST>
       <LineId Id="272" Count="0" />
       <LineId Id="265" Count="0" />
       <LineId Id="349" Count="0" />
+      <LineId Id="415" Count="0" />
       <LineId Id="158" Count="5" />
       <LineId Id="273" Count="0" />
       <LineId Id="283" Count="0" />
       <LineId Id="164" Count="0" />
+      <LineId Id="416" Count="0" />
       <LineId Id="370" Count="0" />
-      <LineId Id="275" Count="6" />
+      <LineId Id="275" Count="1" />
+      <LineId Id="487" Count="0" />
+      <LineId Id="489" Count="0" />
+      <LineId Id="492" Count="0" />
+      <LineId Id="494" Count="0" />
+      <LineId Id="496" Count="1" />
+      <LineId Id="500" Count="0" />
+      <LineId Id="493" Count="0" />
+      <LineId Id="490" Count="0" />
+      <LineId Id="498" Count="0" />
+      <LineId Id="281" Count="0" />
+      <LineId Id="491" Count="0" />
+      <LineId Id="499" Count="0" />
       <LineId Id="274" Count="0" />
+      <LineId Id="417" Count="0" />
       <LineId Id="378" Count="0" />
-      <LineId Id="372" Count="2" />
-      <LineId Id="379" Count="1" />
-      <LineId Id="382" Count="0" />
-      <LineId Id="381" Count="0" />
-      <LineId Id="375" Count="2" />
+      <LineId Id="445" Count="0" />
+      <LineId Id="447" Count="3" />
+      <LineId Id="501" Count="0" />
+      <LineId Id="451" Count="0" />
+      <LineId Id="377" Count="0" />
       <LineId Id="371" Count="0" />
       <LineId Id="165" Count="0" />
       <LineId Id="26" Count="0" />
