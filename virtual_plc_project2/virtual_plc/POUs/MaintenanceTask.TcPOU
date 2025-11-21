@@ -34,7 +34,7 @@ IF CycleCounter >= 5 THEN
         ResetCounter := TRUE;
 		GVL.CLEANING := FALSE;
     END_IF;
-
+//maintenance finished and numbur of coffe made
 ELSE 
     MaintenanceNeeded := FALSE;
     Message := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter));
