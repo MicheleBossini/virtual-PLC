@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MaintenanceTask" Id="{f2ccf1d7-5961-4f5a-bde9-3b71431e1174}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MaintenanceTask
+VAR
+	CycleCounter: INT := 0;;
+	MaintenanceNeeded: BOOL;
+	Message: STRING(INT#16);
+	Tclean: Ton;
+	
+	ResetCounter: BOOL;
+	CoffeeReadyOld: BOOL := FALSE;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// every cooffee made the counter increase
+IF (GVL.CoffeeReady = TRUE) AND (CoffeeReadyOld = FALSE) THEN
+    CycleCounter := CycleCounter + 1;
+END_IF;
+
+CoffeeReadyOld := GVL.CoffeeReady;
+
+// if the machine has done 5 coffee, the cleaning part is needed
+IF CycleCounter >= 5 THEN
+    MaintenanceNeeded := TRUE;
+    Message := 'Maintenance required!';
+	GVL.CLEANING := TRUE;
+
+    Tclean(IN := TRUE, PT := T#4S);
+
+    IF Tclean.Q THEN
+        Tclean(IN := FALSE);
+        ResetCounter := TRUE;
+    END_IF;
+//maintenance finished and numbur of coffe made
+ELSE
+    MaintenanceNeeded := FALSE;
+    Message := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter));
+	GVL.CLEANING := FALSE;
+END_IF;
+
+//after cleaning, counter must be resetted
+IF ResetCounter = TRUE THEN  
+    CycleCounter := 0;
+    MaintenanceNeeded := FALSE;
+    Message := 'Maintenance done';
+    ResetCounter := FALSE; 
+END_IF;
+]]></ST>
+    </Implementation>
+    <LineIds Name="MaintenanceTask">
+      <LineId Id="140" Count="0" />
+      <LineId Id="93" Count="2" />
+      <LineId Id="97" Count="1" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="101" Count="2" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="105" Count="1" />
+      <LineId Id="108" Count="8" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="119" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -27,14 +27,15 @@ IF CycleCounter >= 5 THEN
     Message := 'Maintenance required!';
 	GVL.CLEANING := TRUE;
 
-    Tclean(IN := TRUE, PT := T#4S);
+    Tclean(IN := TRUE, PT := T#8S);
 
     IF Tclean.Q THEN
         Tclean(IN := FALSE);
         ResetCounter := TRUE;
+		GVL.CLEANING := FALSE;
     END_IF;
 //maintenance finished and numbur of coffe made
-ELSE
+ELSE 
     MaintenanceNeeded := FALSE;
     Message := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter));
 	GVL.CLEANING := FALSE;
@@ -53,12 +54,13 @@ END_IF;
       <LineId Id="140" Count="0" />
       <LineId Id="93" Count="2" />
       <LineId Id="97" Count="1" />
-      <LineId Id="154" Count="0" />
       <LineId Id="141" Count="0" />
-      <LineId Id="101" Count="2" />
+      <LineId Id="100" Count="3" />
       <LineId Id="126" Count="0" />
       <LineId Id="105" Count="1" />
-      <LineId Id="108" Count="8" />
+      <LineId Id="108" Count="3" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="112" Count="4" />
       <LineId Id="128" Count="0" />
       <LineId Id="117" Count="0" />
       <LineId Id="142" Count="0" />
