@@ -10,6 +10,8 @@ symple sequence diagram:
 
 ``` plantuml
 @startuml
+actor "User" as User
+
 User -> CoffeeMachine : "I want a coffee"
 CoffeeMachine -> CoffeeMachine : start making coffee
 CoffeeMachine -> User : "What intensity"
