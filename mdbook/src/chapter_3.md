@@ -7,7 +7,27 @@ The cleaning function is automatically called by the maintenance task, and when 
 
 ```plantuml
 @startuml
+title maintenance task - cleaning function
 
+GVL -> Cycle_Counter : coffeeready := TRUE
+Cycle_Counter -> Cycle_Counter : +1
 
+alt Cycle_Counter >=5 
+MaintenanceNeeded -> VAR : MaintenanceNeed := TRUE
+MaintenanceNeeded -> GVL : CLEANING := TRUE
+MaintenanceNeeded -> Timer : timer 5s
+Timer --> MaintenanceNeeded : timer.Q := TRUE
+MaintenanceNeeded -> GVL : CLEANING := FALSE
+MaintenanceNeeded -> VAR: MaintenanceNeeded := FALSE
+MaintenanceNeeded -> VAR : ResetCounter := TRUE
+end
+alt ResetCounter := TRUE
+VAR -> Cycle_Counter : =0
+MaintenanceNeeded -> VAR : ResetCounter := FALSE
+
+end
+
+@enduml
+```
 
 
