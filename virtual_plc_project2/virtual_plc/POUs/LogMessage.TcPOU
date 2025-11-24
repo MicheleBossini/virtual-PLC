@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="LogMessage" Id="{800e1b71-e7e6-4a9c-9169-bf36698146e3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION LogMessage : BOOL
+VAR_INPUT
+	msg : STRING;
+	cleaning :BOOL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF GVL.Message <> msg THEN
+GVL.Message := msg;
+END_IF;
+GVL.CLEANING := cleaning;
+LogMessage := TRUE;]]></ST>
+    </Implementation>
+    <LineIds Name="LogMessage">
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

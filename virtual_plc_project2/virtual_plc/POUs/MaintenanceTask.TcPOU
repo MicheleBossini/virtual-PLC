@@ -5,12 +5,13 @@
 VAR
 	CycleCounter: INT := 0;;
 	MaintenanceNeeded: BOOL;
-	Message: STRING(INT#16);
 	Tclean: Ton;
 	
 	ResetCounter: BOOL;
 	CoffeeReadyOld: BOOL := FALSE;
 	
+	bResult: BOOL;
+	Treset: Ton;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -24,29 +25,32 @@ CoffeeReadyOld := GVL.CoffeeReady;
 // if the machine has done 5 coffee, the cleaning part is needed
 IF CycleCounter >= 5 THEN
     MaintenanceNeeded := TRUE;
-    Message := 'Maintenance required!';
-	GVL.CLEANING := TRUE;
+   
 
-    Tclean(IN := TRUE, PT := T#8S);
-
+    Tclean(IN := TRUE, PT := T#6S);
+	LogMessage (msg := 'Maintenance required!', cleaning := TRUE);
     IF Tclean.Q THEN
         Tclean(IN := FALSE);
         ResetCounter := TRUE;
-		GVL.CLEANING := FALSE;
+		LogMessage(msg := 'Maintenance done', cleaning := FALSE);
     END_IF;
 //maintenance finished and numbur of coffe made
 ELSE 
     MaintenanceNeeded := FALSE;
-    Message := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter));
-	GVL.CLEANING := FALSE;
+    LogMessage(msg := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter)), cleaning := FALSE);
+	;
 END_IF;
 
 //after cleaning, counter must be resetted
 IF ResetCounter = TRUE THEN  
-    CycleCounter := 0;
-    MaintenanceNeeded := FALSE;
-    Message := 'Maintenance done';
-    ResetCounter := FALSE; 
+    
+LogMessage(msg := 'Maintenance done', cleaning := FALSE);
+Treset(IN := TRUE, PT := T#2S);
+    IF Treset.Q THEN
+        Treset(IN := FALSE);
+		CycleCounter := 0;
+        ResetCounter := FALSE;
+    END_IF;
 END_IF;
 ]]></ST>
     </Implementation>
@@ -56,7 +60,6 @@ END_IF;
       <LineId Id="97" Count="1" />
       <LineId Id="141" Count="0" />
       <LineId Id="100" Count="3" />
-      <LineId Id="126" Count="0" />
       <LineId Id="105" Count="1" />
       <LineId Id="108" Count="3" />
       <LineId Id="154" Count="0" />
@@ -64,8 +67,15 @@ END_IF;
       <LineId Id="128" Count="0" />
       <LineId Id="117" Count="0" />
       <LineId Id="142" Count="0" />
-      <LineId Id="119" Count="6" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="119" Count="2" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="169" Count="1" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="179" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

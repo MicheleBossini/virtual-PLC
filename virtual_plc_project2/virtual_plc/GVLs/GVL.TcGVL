@@ -6,6 +6,8 @@ VAR_GLOBAL
 	CoffeeReady: BOOL := FALSE;
 
 	CLEANING: BOOL := FALSE;
+
+	Message: STRING;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

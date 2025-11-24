@@ -30,7 +30,8 @@ VAR
 	Tclean: TON;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE state OF
+      <ST><![CDATA[
+CASE state OF
 
     status.START:  //initialization and start the machine
         GVL.CoffeeReady := FALSE; 
@@ -40,6 +41,7 @@ END_VAR]]></Declaration>
         WaterLevel := FALSE;
         WaterReady := FALSE;
 		SugarMessage := '';
+		LogMessage(msg := 'Machine started', cleaning := FALSE);
 		IF start THEN
             state := status.LEVELCHECK; //check if the water is enough
         END_IF;       
@@ -63,6 +65,7 @@ END_VAR]]></Declaration>
             Tfill(IN := FALSE);  
             FILLING := FALSE;    
             Level := 100;    
+			LogMessage(msg := 'Water filled', cleaning := FALSE);
             State := status.HEAT;              
         END_IF
 		IF NOT start THEN
@@ -163,15 +166,15 @@ END_VAR]]></Declaration>
 			 Tclean(IN:=FALSE);
 			 state:=status.START;
 			 
-		 END_IF	 
-	 
-	 
+		 END_IF	  
 
 END_CASE;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="531" Count="0" />
       <LineId Id="111" Count="8" />
       <LineId Id="260" Count="0" />
+      <LineId Id="529" Count="0" />
       <LineId Id="357" Count="1" />
       <LineId Id="360" Count="0" />
       <LineId Id="320" Count="0" />
@@ -191,6 +194,7 @@ END_CASE;]]></ST>
       <LineId Id="198" Count="0" />
       <LineId Id="194" Count="2" />
       <LineId Id="325" Count="0" />
+      <LineId Id="530" Count="0" />
       <LineId Id="197" Count="0" />
       <LineId Id="188" Count="0" />
       <LineId Id="313" Count="2" />
@@ -255,8 +259,6 @@ END_CASE;]]></ST>
       <LineId Id="447" Count="3" />
       <LineId Id="501" Count="0" />
       <LineId Id="451" Count="0" />
-      <LineId Id="377" Count="0" />
-      <LineId Id="371" Count="0" />
       <LineId Id="165" Count="0" />
       <LineId Id="26" Count="0" />
     </LineIds>
