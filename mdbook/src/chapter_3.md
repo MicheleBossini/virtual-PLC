@@ -14,7 +14,7 @@ Cycle_Counter -> Cycle_Counter : +1
 
 alt Cycle_Counter >=5 
 VAR -> MaintenanceNeeded : start maintenance
-MaintenanceNeeded -> VAR : MaintenanceNeed := TRUE
+MaintenanceNeeded -> VAR : MaintenanceNeeded := TRUE
 MaintenanceNeeded -> GVL : CLEANING := TRUE
 MaintenanceNeeded -> Timer : timer 5s
 Timer --> VAR : timer.Q := TRUE
