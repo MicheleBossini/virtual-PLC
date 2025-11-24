@@ -5,12 +5,9 @@
 VAR
 	CycleCounter: INT := 0;;
 	MaintenanceNeeded: BOOL;
-	Tclean: Ton;
 	
 	ResetCounter: BOOL;
 	CoffeeReadyOld: BOOL := FALSE;
-	
-	bResult: BOOL;
 	Treset: Ton;
 END_VAR
 ]]></Declaration>
@@ -23,14 +20,14 @@ END_IF;
 CoffeeReadyOld := GVL.CoffeeReady;
 
 // if the machine has done 5 coffee, the cleaning part is needed
-IF CycleCounter >= 5 THEN
+IF CycleCounter >= 2 THEN
     MaintenanceNeeded := TRUE;
    
 
-    Tclean(IN := TRUE, PT := T#6S);
+    GVL.Tclean(IN := TRUE, PT := T#6S);
 	LogMessage (msg := 'Maintenance required!', cleaning := TRUE);
-    IF Tclean.Q THEN
-        Tclean(IN := FALSE);
+    IF GVL.Tclean.Q THEN
+        GVL.Tclean(IN := FALSE);
         ResetCounter := TRUE;
 		LogMessage(msg := 'Maintenance done', cleaning := FALSE);
     END_IF;

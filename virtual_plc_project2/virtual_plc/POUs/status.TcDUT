@@ -15,7 +15,8 @@ INTENSITY,
 SUGAR,
 READY,
 CLEAN,
-END
+END,
+OldState
 ) := START;
 END_TYPE
 ]]></Declaration>

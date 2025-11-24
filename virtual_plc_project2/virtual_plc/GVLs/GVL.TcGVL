@@ -8,6 +8,7 @@ VAR_GLOBAL
 	CLEANING: BOOL := FALSE;
 
 	Message: STRING;
+	Tclean: Ton;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

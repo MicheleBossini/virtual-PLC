@@ -10,7 +10,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{75DA8F02-212E-401F-954C-C6C6FFD911F8}" Name="virtual_plc" PrjFilePath="virtual_plc\virtual_plc.plcproj" TmcFilePath="virtual_plc\virtual_plc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="virtual_plc\virtual_plc.tmc" TmcHash="{AFF4E168-ECB1-C5CB-E2D7-D839F7AA0755}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="virtual_plc\virtual_plc.tmc" TmcHash="{F43EE187-88D1-AC4E-CC9F-3FA165B988B2}">
 					<Name>virtual_plc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

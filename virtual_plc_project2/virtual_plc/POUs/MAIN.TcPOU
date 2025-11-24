@@ -27,11 +27,11 @@ VAR
 	
 	state : status := status.START;
 
-	Tclean: TON;
+	;
+
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-CASE state OF
+      <ST><![CDATA[CASE state OF
 
     status.START:  //initialization and start the machine
         GVL.CoffeeReady := FALSE; 
@@ -161,9 +161,9 @@ CASE state OF
 		
 	//waiting time to allow the machine cleaning program, if we reached 5 cycles
 	status.CLEAN:
-		 Tclean(IN:=TRUE, PT := T#8S);
-		 IF Tclean.Q THEN
-			 Tclean(IN:=FALSE);
+		 GVL.Tclean(IN:=TRUE, PT := T#8S);
+		 IF GVL.Tclean.Q THEN
+			 GVL.Tclean(IN:=FALSE);
 			 state:=status.START;
 			 
 		 END_IF	  
@@ -171,7 +171,6 @@ CASE state OF
 END_CASE;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="531" Count="0" />
       <LineId Id="111" Count="8" />
       <LineId Id="260" Count="0" />
       <LineId Id="529" Count="0" />
