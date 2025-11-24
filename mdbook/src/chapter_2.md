@@ -33,7 +33,7 @@ alt Water_Level < 80%
 VAR -> Water : Start Filling
 Water -> VAR : FILLING := TRUE
 Water -> Timer : timer 5s
-Timer -> Water : timer.Q := TRUE
+Timer -> VAR : timer.Q := TRUE
 Water -> VAR : Water_Level := 100%
 Water -> VAR : FILLING := FALSE
 end
@@ -41,7 +41,7 @@ end
 VAR -> Heater : Start Heating
 Heater -> VAR : HEATING := TRUE
 Heater -> Timer : timer 5s
-Timer --> Heater : Timer.Q = TRUE
+Timer --> VAR : Timer.Q = TRUE
 Heater -> VAR : HEATING := FALSE
 Heater -> VAR : Water_Temp := 90.0
 Heater -> VAR : Water_Ready := TRUE
@@ -52,7 +52,7 @@ VAR -> Brewer : Check Water_Ready
 alt Water_Ready = TRUE
 Brewer -> VAR : BREWING := TRUE
 Brewer -> Timer : Start 3s/6s/9s
-Timer --> Brewer : Timer.Q = TRUE
+Timer --> VAR : Timer.Q = TRUE
 Brewer -> VAR : BREWING := FALSE
 Brewer -> VAR : Coffee_Ready := TRUE
 end
@@ -61,6 +61,12 @@ end
 
 alt coffe_ready := TRUE
 CoffeeReady -> GVL : Finish :=TRUE
+end
+
+== Cleaning Function ==
+alt GVL.CLEANING := TRUE
+Timer -> Timer : timer 8s
+Timer -> VAR : timer.Q := TRUE
 end
 
 @enduml
