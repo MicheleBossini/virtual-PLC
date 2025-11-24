@@ -13,11 +13,13 @@ GVL -> Cycle_Counter : coffeeready := TRUE
 Cycle_Counter -> Cycle_Counter : +1
 
 alt Cycle_Counter >=5 
+VAR -> MaintenanceNeeded : start maintenance
 MaintenanceNeeded -> VAR : MaintenanceNeed := TRUE
 MaintenanceNeeded -> GVL : CLEANING := TRUE
 MaintenanceNeeded -> Timer : timer 5s
-Timer --> MaintenanceNeeded : timer.Q := TRUE
+Timer --> VAR : timer.Q := TRUE
 MaintenanceNeeded -> GVL : CLEANING := FALSE
+VAR -> MaintenanceNeeded : stop maintenance
 MaintenanceNeeded -> VAR: MaintenanceNeeded := FALSE
 MaintenanceNeeded -> VAR : ResetCounter := TRUE
 end
