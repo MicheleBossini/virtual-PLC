@@ -4,7 +4,7 @@ authors = Michele Bossini
 
 student number : 586306
 
-routine chosen: automatic coffee machine and maintenance procedure
+routine chosen: automatic coffee machine and maintenance requirements
 
 symple sequence diagram:
 
