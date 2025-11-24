@@ -60,14 +60,16 @@ end
 == End Process ==
 
 alt coffe_ready := TRUE
-CoffeeReady -> GVL : Finish :=TRUE
+CoffeeReady -> GVL : CoffeeReady :=TRUE
 end
 
 == Cleaning Function ==
 alt GVL.CLEANING := TRUE
 Timer -> Timer : timer 8s
-Timer -> VAR : timer.Q := TRUE
+Timer --> VAR : timer.Q := TRUE
 end
-
+CoffeeReady -> Timer : timer 5s
+Timer --> VAR : timer.Q:= TRUE
+CoffeeReady -> GVL : CoffeeReady :=FALSE
 @enduml
 ```
