@@ -11,20 +11,23 @@ title maintenance task - cleaning function
 
 GVL -> Cycle_Counter : coffeeready := TRUE
 Cycle_Counter -> Cycle_Counter : +1
+Cycle_Counter -> GVL : message: "coffee made: ..."
 
 alt Cycle_Counter >=5 
 VAR -> MaintenanceNeeded : start maintenance
 MaintenanceNeeded -> VAR : MaintenanceNeeded := TRUE
+MaintenanceNeeded -> GVL : message: "Maintenance required"
 MaintenanceNeeded -> GVL : CLEANING := TRUE
 MaintenanceNeeded -> Timer : timer 5s
 Timer --> VAR : timer.Q := TRUE
 MaintenanceNeeded -> GVL : CLEANING := FALSE
 VAR -> MaintenanceNeeded : stop maintenance
 MaintenanceNeeded -> VAR: MaintenanceNeeded := FALSE
+MaintenanceNeeded -> GVL : message: "Maintenance done"
 MaintenanceNeeded -> VAR : ResetCounter := TRUE
 end
 alt ResetCounter := TRUE
-VAR -> Cycle_Counter : =0
+VAR -> Cycle_Counter : "=0"
 MaintenanceNeeded -> VAR : ResetCounter := FALSE
 
 end
