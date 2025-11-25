@@ -25,7 +25,7 @@ title Coffee Maker - Linear Process Flow
 == Start Process ==
 
 User -> VAR : Start := TRUE
-
+User -> GVL : message: "machine started"
 VAR -> Water : Check Water_Level
 Water -> VAR : Water_Level
 
@@ -36,6 +36,7 @@ Water -> Timer : timer 5s
 Timer -> VAR : timer.Q := TRUE
 Water -> VAR : Water_Level := 100%
 Water -> VAR : FILLING := FALSE
+Water -> GVL : message: "water filled"
 end
 
 VAR -> Heater : Start Heating
@@ -44,32 +45,32 @@ Heater -> Timer : timer 5s
 Timer --> VAR : Timer.Q = TRUE
 Heater -> VAR : HEATING := FALSE
 Heater -> VAR : Water_Temp := 90.0
+Heater -> GVL : message: "water heated"
 Heater -> VAR : Water_Ready := TRUE
 
 == Brewing Process ==
 
 VAR -> Brewer : Check Water_Ready
-alt Water_Ready = TRUE
+
 Brewer -> VAR : BREWING := TRUE
 Brewer -> Timer : Start 3s/6s/9s
 Timer --> VAR : Timer.Q = TRUE
 Brewer -> VAR : BREWING := FALSE
+Brewer -> GVL : message: "water brewed"
 Brewer -> VAR : Coffee_Ready := TRUE
-end
+
 
 == End Process ==
+CoffeeReady -> Timer : Start 2s
+Timer --> VAR : Timer.Q = TRUE
+CoffeeReady -> GVL : CoffeeReady :=FALSE
 
-alt coffe_ready := TRUE
-CoffeeReady -> GVL : CoffeeReady :=TRUE
-end
 
 == Cleaning Function ==
 alt GVL.CLEANING := TRUE
 Timer -> Timer : timer 8s
 Timer --> VAR : timer.Q := TRUE
 end
-CoffeeReady -> Timer : timer 5s
-Timer --> VAR : timer.Q:= TRUE
-CoffeeReady -> GVL : CoffeeReady :=FALSE
+
 @enduml
 ```

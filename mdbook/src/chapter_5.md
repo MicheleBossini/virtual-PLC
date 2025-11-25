@@ -5,15 +5,18 @@ For the main task, the function informs the user about the machine’s preparati
 
 For the second task, the function displays a message indicating the number of coffees produced. When this number reaches five, the message “Maintenance required” is shown, and once the maintenance is completed, the message “Maintenance done” is displayed.
 
+The function also monitors the CLEANING variable: it turns the variable on when maintenance is required and turns it off once the cleaning procedure has been completed.
+
+
 ```plantuml
 @startuml
-title Maintenance Task - Function Call Sequence
+title Function Call Sequence Diagram
 
-MAIN -> FunctionLogMessage : coffee machine's preparation status
+MAINtask-> FunctionLogMessage : coffee machine's preparation status
 MaintenanceTask -> FunctionLogMessage: How many caffee are already made
 MaintenanceTask -> FunctionLogMessage: Cleaning information
 
-FunctionLogMessage -> GVL: GVL.MessageMaintenance := 'Coffee made:...'
+FunctionLogMessage -> GVL: GVL.MessageMaintenance := 'Coffee made: ...'
 alt CoffeeMade >=5
 FunctionLogMessage -> GVL: GVL.MessageMaintenance := 'Maintenance required!'
 FunctionLogMessage -> GVL: CLEANING:=TRUE
