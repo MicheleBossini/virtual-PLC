@@ -4,6 +4,8 @@
     <Declaration><![CDATA[PROGRAM MAIN
 
 VAR
+	INTENSITY_BUTTON : INT;
+	SUGAR_BUTTON : INT :=1;
 	start : BOOL := FALSE;
 	Tfill: TON;
 	FILLING : BOOL := FALSE;
@@ -20,9 +22,9 @@ VAR
 	CoffeeBrewed : BOOL := FALSE;
 	Tready: TON;
 	
-	INTENSITY_BUTTON : INT;
+	
 	TIMER : TON;
-	SUGAR_BUTTON : INT :=1;
+	
 	SugarMessage : STRING(30);
 	
 	state : status := status.START;
