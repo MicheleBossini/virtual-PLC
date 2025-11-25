@@ -34,3 +34,6 @@ CoffeeMachine -> User :"Ready for another coffee"
 
 Advice for professors: when starting the program, set the START variable to TRUE to test the MAIN task.
 To view how the maintenance task works, you can force the start variable to TRUE, which will repeat the process automatically.
+
+
+Before pressing the START button, you must select the desired coffee intensity and the appropriate amount of sugar.
