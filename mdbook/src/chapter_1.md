@@ -18,13 +18,13 @@ CoffeeMachine -> User : "What intensity"
 User -> CoffeeMachine : intensity selection
 CoffeeMachine -> User : "sugar quantity"
 User -> CoffeeMachine : sugar selection
-CoffeeMachine -> Counter : coffee ready
+CoffeeMachine -> Maintenance : coffee ready
 CoffeeMachine -> User : "your coffee is ready"
 alt coffee ready 
-CoffeeMachine -> Counter : coffee made +1
+CoffeeMachine -> Maintenance : coffee made +1
 end
 alt Counter >= 5
-Counter -> Maintenance : start cleaning
+Maintenance -> Maintenance : start cleaning
 Maintenance -> CoffeeMachine : CLEANING
 end 
 CoffeeMachine -> User :"Ready for another coffee"
