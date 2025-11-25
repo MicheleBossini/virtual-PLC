@@ -30,3 +30,7 @@ end
 CoffeeMachine -> User :"Ready for another coffee"
 @enduml
 ```
+
+
+Advice for professors: when starting the program, set the START variable to TRUE to test the MAIN task.
+To view how the maintenance task works, you can force the start variable to TRUE, which will repeat the process automatically.
