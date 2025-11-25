@@ -6,8 +6,9 @@ VAR_GLOBAL
 	CoffeeReady: BOOL := FALSE;
 
 	CLEANING: BOOL := FALSE;
-
-	Message: STRING;
+	
+	MessageMaintenance: STRING;
+	MessageToUser: STRING;
 	Tclean: Ton;
 END_VAR]]></Declaration>
   </GVL>

@@ -5,21 +5,34 @@
 VAR_INPUT
 	msg : STRING;
 	cleaning :BOOL;
+	taskId: INT;
 END_VAR
 VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF GVL.Message <> msg THEN
-GVL.Message := msg;
-END_IF;
+      <ST><![CDATA[CASE taskId OF
+	1: IF GVL.MessageMaintenance <> msg THEN
+		GVL.MessageMaintenance := msg;
+		END_IF;
+	2: IF GVL.MessageToUser <> msg THEN
+		GVL.MessageToUser := msg;
+		END_IF;
+END_CASE
+
+
 GVL.CLEANING := cleaning;
 LogMessage := TRUE;]]></ST>
     </Implementation>
     <LineIds Name="LogMessage">
-      <LineId Id="12" Count="0" />
-      <LineId Id="14" Count="1" />
-      <LineId Id="13" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="73" Count="1" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="62" Count="1" />
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>
