@@ -58,13 +58,13 @@ Timer --> VAR : Timer.Q = TRUE
 Brewer -> VAR : BREWING := FALSE
 Brewer -> GVL : message: "water brewed"
 Brewer -> VAR : Coffee_Ready := TRUE
-
+CoffeeReady -> GVL : message: "coffee ready"
 
 == End Process ==
 CoffeeReady -> Timer : Start 2s
 Timer --> VAR : Timer.Q = TRUE
 CoffeeReady -> GVL : CoffeeReady :=FALSE
-
+CoffeeReady -> GVL : message: "coffee served"
 
 == Cleaning Function ==
 alt GVL.CLEANING := TRUE
