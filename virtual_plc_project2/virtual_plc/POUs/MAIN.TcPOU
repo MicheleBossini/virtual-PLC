@@ -47,8 +47,9 @@ END_VAR]]></Declaration>
 		Tstarting(IN:=TRUE, PT:= T#2S);
             IF Tstarting.Q THEN
 			state := status.LEVELCHECK; //check if the water is enough
-			LogMessage(msg := 'Machine started', cleaning := FALSE, 2);
+			LogMessage(msg := 'Machine started', cleaning := FALSE, 2);// show the message in GVL of the current preparation state 
 			Tstarting(IN:=FALSE);
+			GVL.CoffeeReady:=FALSE;
 			END_IF
         END_IF;       
 	
@@ -71,7 +72,7 @@ END_VAR]]></Declaration>
             Tfill(IN := FALSE);  
             FILLING := FALSE;    
             Level := 100;    
-			LogMessage(msg := 'Water filled', cleaning := FALSE, 2);
+			LogMessage(msg := 'Water filled', cleaning := FALSE, 2);// show the message in GVL of the current preparation state 
             State := status.HEAT;              
         END_IF
 		IF NOT start THEN
@@ -91,7 +92,7 @@ END_VAR]]></Declaration>
 			Level := Level - 10;
 			Theat(IN:= FALSE);
 			state := status.WATERREADY;
-			LogMessage(msg := 'Water heating', cleaning := FALSE, 2);			
+			LogMessage(msg := 'Water heating', cleaning := FALSE, 2);	// show the message in GVL of the current preparation state 		
 		END_IF
 		
 	// when the right temperature of the water is reached, water is ready 
@@ -103,7 +104,7 @@ END_VAR]]></Declaration>
             Theat(IN := FALSE);
 			WaterTemp := 30;
             state := status.INTENSITY;
-			LogMessage(msg := 'Water ready', cleaning := FALSE, 2);
+			LogMessage(msg := 'Water ready', cleaning := FALSE, 2); // show the message in GVL of the current preparation state
         END_IF
 	// need to choose the intensity of the coffee, level 1 if the user wants light coffe and 3 if strong coffee
     status.INTENSITY:  
@@ -123,7 +124,7 @@ END_VAR]]></Declaration>
             Tbrew(IN := FALSE); 
             State := status.SUGAR;  
             CoffeeBrewed := TRUE; 
-			LogMessage(msg := 'Water brewed', cleaning := FALSE, 2);
+			LogMessage(msg := 'water brewed', cleaning := FALSE, 2); // show the message in GVL of the current preparation state 
         END_IF
 		
 	// the user can choose the sugar quantity
@@ -139,46 +140,40 @@ END_VAR]]></Declaration>
 		END_CASE
 		state := status.READY;
 	END_IF
-	
 	//The coffee is ready
     status.READY:  
-        Tready(IN := TRUE, PT := T#5S);
+        Tready(IN := TRUE, PT := T#2S);
         IF Tready.Q THEN
             Tready(IN := FALSE);
             state := status.END;
             start := FALSE;
-			GVL.CoffeeReady := TRUE;
 			CoffeeBrewed := FALSE;
-			LogMessage(msg := 'Coffee ready', cleaning := FALSE, 2);
+			GVL.CoffeeReady := TRUE;
+			LogMessage(msg := 'Coffee ready', cleaning := FALSE, 2);// show the message in GVL of the current preparation state 
         END_IF
+	
 		
 	// coffee is ready, step to visualize the message 'water ready' and wait the constumer grab the coffee
 	status.END:  
-        Tend(IN := TRUE, PT := T#3S);
-        IF Tend.Q THEN           
-            IF GVL.CLEANING THEN
-				state:=status.CLEAN;
-				Tend(IN := FALSE);
+        
+        IF GVL.CLEANING THEN 
+		  state:=status.CLEAN;
+		  start := FALSE;
+		  LogMessage(msg := 'Coffee ready', cleaning := TRUE, 2);// show the message in GVL of the current preparation state				
+		ELSE 
+            	
 				start := FALSE;
-				GVL.CoffeeReady := FALSE;
-				LogMessage(msg := 'Coffee served', cleaning := FALSE, 2);
-				
-			ELSE 
-            	Tend(IN := FALSE);
-				start := FALSE;
-				GVL.CoffeeReady := FALSE;
 				state := status.START;
-				LogMessage(msg := 'coffee served', cleaning := FALSE, 2);
 			END_IF
-        END_IF;
+        
 		
 	//waiting time to allow the machine cleaning program, if we reached 5 cycles
 	status.CLEAN:
-		 GVL.Tclean(IN:=TRUE, PT := T#8S);
+		 GVL.Tclean(IN:=TRUE, PT := T#10S);
 		 IF GVL.Tclean.Q THEN
 			 GVL.Tclean(IN:=FALSE);
 			 state:=status.START;
-			 LogMessage(msg := 'cleaning', cleaning := FALSE, 2);
+			 LogMessage(msg := 'cleaned',cleaning := FALSE, 2);// show the message in GVL of the current preparation state
 		 END_IF	  
 
 END_CASE;]]></ST>
@@ -191,7 +186,9 @@ END_CASE;]]></ST>
       <LineId Id="574" Count="0" />
       <LineId Id="358" Count="0" />
       <LineId Id="572" Count="0" />
-      <LineId Id="575" Count="2" />
+      <LineId Id="575" Count="1" />
+      <LineId Id="599" Count="0" />
+      <LineId Id="577" Count="0" />
       <LineId Id="360" Count="0" />
       <LineId Id="320" Count="0" />
       <LineId Id="410" Count="0" />
@@ -254,29 +251,21 @@ END_CASE;]]></ST>
       <LineId Id="267" Count="0" />
       <LineId Id="272" Count="0" />
       <LineId Id="265" Count="0" />
+      <LineId Id="584" Count="7" />
+      <LineId Id="593" Count="0" />
+      <LineId Id="592" Count="0" />
       <LineId Id="349" Count="0" />
-      <LineId Id="415" Count="0" />
-      <LineId Id="158" Count="5" />
-      <LineId Id="571" Count="0" />
-      <LineId Id="283" Count="0" />
-      <LineId Id="568" Count="0" />
       <LineId Id="164" Count="0" />
       <LineId Id="416" Count="0" />
       <LineId Id="370" Count="0" />
       <LineId Id="275" Count="1" />
       <LineId Id="487" Count="0" />
-      <LineId Id="489" Count="0" />
-      <LineId Id="492" Count="0" />
-      <LineId Id="494" Count="0" />
-      <LineId Id="496" Count="1" />
-      <LineId Id="569" Count="0" />
-      <LineId Id="500" Count="0" />
+      <LineId Id="596" Count="1" />
+      <LineId Id="496" Count="0" />
       <LineId Id="493" Count="0" />
       <LineId Id="490" Count="0" />
       <LineId Id="498" Count="0" />
-      <LineId Id="281" Count="0" />
       <LineId Id="491" Count="0" />
-      <LineId Id="570" Count="0" />
       <LineId Id="499" Count="0" />
       <LineId Id="274" Count="0" />
       <LineId Id="417" Count="0" />

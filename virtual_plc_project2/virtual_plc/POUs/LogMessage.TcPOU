@@ -5,17 +5,17 @@
 VAR_INPUT
 	msg : STRING;
 	cleaning :BOOL;
-	taskId: INT;
+	taskId: INT; 
 END_VAR
 VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE taskId OF
-	1: IF GVL.MessageMaintenance <> msg THEN
-		GVL.MessageMaintenance := msg;
+      <ST><![CDATA[CASE taskId OF   // select wich block of code to execute based on the value of taskId
+	1: IF GVL.MessageMaintenance <> msg THEN // check if the global variable is different from the new message
+		GVL.MessageMaintenance := msg; 
 		END_IF;
-	2: IF GVL.MessageToUser <> msg THEN
+	2: IF GVL.MessageToUser <> msg THEN // check if the global variable is different from the new message
 		GVL.MessageToUser := msg;
 		END_IF;
 END_CASE

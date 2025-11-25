@@ -23,25 +23,24 @@ CoffeeReadyOld := GVL.CoffeeReady;
 IF CycleCounter >= 5 THEN
     MaintenanceNeeded := TRUE;
    
-
-    GVL.Tclean(IN := TRUE, PT := T#6S);
-	LogMessage (msg := 'Maintenance required!', cleaning := TRUE, 1);
+    GVL.Tclean(IN := TRUE, PT := T#10S);
+	LogMessage (msg := 'Maintenance required!', cleaning := TRUE, 1);// show the message 'Maintenance required!' in GVL and set GVL.CLEANING to TRUE
     IF GVL.Tclean.Q THEN
+		LogMessage(msg := 'Maintenance done', cleaning := FALSE, 1); // show the message 'Maintenance done' in GVL and set GVL.CLEANING to FALSE
         GVL.Tclean(IN := FALSE);
         ResetCounter := TRUE;
-		LogMessage(msg := 'Maintenance done', cleaning := FALSE, 1);
+		
     END_IF;
 //maintenance finished and numbur of coffe made
 ELSE 
     MaintenanceNeeded := FALSE;
-    LogMessage(msg := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter)), cleaning := FALSE, 1);
+    LogMessage(msg := CONCAT('Coffees made: ', INT_TO_STRING(CycleCounter)), cleaning := FALSE, 1);//show by message the number of coffee made in GVL
 	;
 END_IF;
 
 //after cleaning, counter must be resetted
 IF ResetCounter = TRUE THEN  
     
-LogMessage(msg := 'Maintenance done', cleaning := FALSE, 1);
 Treset(IN := TRUE, PT := T#2S);
     IF Treset.Q THEN
         Treset(IN := FALSE);
@@ -57,15 +56,16 @@ END_IF;
       <LineId Id="97" Count="1" />
       <LineId Id="141" Count="0" />
       <LineId Id="100" Count="3" />
-      <LineId Id="105" Count="1" />
-      <LineId Id="108" Count="3" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="108" Count="1" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="110" Count="1" />
       <LineId Id="154" Count="0" />
       <LineId Id="112" Count="4" />
       <LineId Id="128" Count="0" />
       <LineId Id="117" Count="0" />
       <LineId Id="142" Count="0" />
       <LineId Id="119" Count="2" />
-      <LineId Id="176" Count="0" />
       <LineId Id="167" Count="0" />
       <LineId Id="169" Count="1" />
       <LineId Id="178" Count="0" />
