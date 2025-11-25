@@ -20,7 +20,7 @@ END_IF;
 CoffeeReadyOld := GVL.CoffeeReady;
 
 // if the machine has done 5 coffee, the cleaning part is needed
-IF CycleCounter >= 2 THEN
+IF CycleCounter >= 5 THEN
     MaintenanceNeeded := TRUE;
    
 
